@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>EVEN</title>
+
+	<link href="styles/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="styles/cytoscape.js-panzoom.css">
+	<link rel="stylesheet" href="styles/cytoscape-context-menus.css">
+	<link rel="stylesheet" href="styles/my-style.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light my-nav-bar">
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+				File
+			</a>
+			<ul class="dropdown-menu" navbarDropdown">
+				<li><input id="file-input-multiple" type="file" style="display:none" multiple/>
+					<a class="dropdown-item" href="#" type="file" id="load-multiple-files">Load Multiple Files</a>
+				</li>
+				<li><input id="file-input-left" type="file" style="display:none" />
+					<a class="dropdown-item" href="#" type="file" id="load-file-left">Load into Left</a>
+				</li>
+				<li><input id="file-input-right" type="file" style="display:none" />
+					<a class="dropdown-item" href="#" type="file" id="load-file-right">Load into Right</a>
+				</li>
+				<li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Samples</a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="#" id="sample0">ovcar4-cos318</a></li>
+					<li><a class="dropdown-item" href="#" id="sample1">ovcar4-ovcar3</a></li>
+				</ul>
+				</li>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#" id="save-file">Save</a>
+
+				<li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Export as Image</a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="#" id="save-as-png">PNG</a></li>
+					<li><a class="dropdown-item" href="#" id="save-as-jpg">JPG</a></li>
+				</ul>
+				</li>
+			</ul>
+			</li>
+
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="editDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Edit
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="editDropdown">
+				<a class="dropdown-item" href="#" id="instance-properties">Instance Properties...</a>
+				<a class="dropdown-item" id="delete-selected" href="#">Delete Selected<i class="shortcut"> (DEL)</i> </a>
+				<a class="dropdown-item" id="clear-instances" href="#">Clear</a>
+			</ul>
+			</li>
+
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="editDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				View
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="editDropdown">
+				<li><a href="#" class="dropdown-item" data-value="option1" id="sync"><label><input id="syncBox" type="checkbox"/>&nbsp;Sync</label></a></li>
+			</ul>
+			</li>
+
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="editDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Layout
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Style</a>
+				<ul class="dropdown-menu">
+					<a class="dropdown-item" href="#" id="cose-bilkent">Merged</a>
+					<a class="dropdown-item" href="#" id="cose">Unnamed Layout</a>
+				</ul>
+				</li>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#" id="perform-layout">Perform Layout</a>
+				<a class="dropdown-item" href="#" id="layout-properties">Layout Properties</a>
+			</ul>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="#" data-toggle="modal" data-target="#quick-help-template">
+				Help
+			</a>
+			</li>
+		</ul>
+		<a href="#" target="_blank"><img src="images/even.svg" style="height: 36px;" title="Effective Visualization of Evolving Networks"></a>
+	</div>
+</nav>
+
+<div id="toolbar" class="btn-toolbar" role="toolbar">
+	<div class="btn-group mr-2" role="group">
+		<img id="load-file-left-icon" class="toolbar-element" src="images/toolbar/load-file-left.svg" title="Load file into left side">
+		<img id="load-file-right-icon" class="toolbar-element" src="images/toolbar/load-file-right.svg" title="Load file into right side">
+		<img id="load-multiple-files-icon" class="toolbar-element" src="images/toolbar/load-multiple-files.svg" title="Load: Load multiple files">
+	</div>
+
+	<div class="btn-group mr-2" role="group">
+		<img id="select-mode-icon" class="toolbar-element selected-mode" src="images/toolbar/select-mode-icon.svg" title="Select mode">
+		<div class="btn-group toolbar-element sbgn-dd-list" style="border:0px !important">
+			<button type="button" class="btn dropdown-button" style="padding: 0px;padding-left: 6px;padding-right:6px;">
+				<img id="add-node-dropdown" shape="rectangle" src="images/toolbar/rectangle.svg" class="toolbar-element" style="margin-left: 0px;">
+			</button>
+
+			<button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+				<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<div class="dropdown-menu">
+				<a id="pentagon-node" class="dropdown-item dropdown-item-split"  href="#"><img id="imageid" src="images/toolbar/pentagon.svg" shape="pentagon"/>Pentagon</a>
+				<a id="rectangle-node" class="dropdown-item dropdown-item-split"  href="#"><img id="imageid" src="images/toolbar/rectangle.svg" shape="rectangle"/>Rectangle</a>
+			</div>
+		</div>
+
+		<div class="btn-group toolbar-element sbgn-dd-list" style="border:0px !important">
+			<button type="button" class="btn dropdown-button" style="padding: 0px;padding-left: 6px;padding-right:6px;">
+				<img id="add-edge-dropdown" shape="rectangle" src="images/toolbar/line.svg" class="toolbar-element" style="margin-left: 0px;">
+			</button>
+
+			<button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+				<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<div class="dropdown-menu">
+				<a id="haystack-edge" class="dropdown-item dropdown-item-split" href="#"><img src="images/toolbar/line.svg" shape="haystack"/>Line</a>
+				<a id="triangle-edge" class="dropdown-item dropdown-item-split" href="#"><img src="images/toolbar/triangle.svg" shape="triangle"/>Triangle</a>
+			</div>
+		</div>
+
+		<img id="delete-selected-icon" class="toolbar-element" src="images/toolbar/delete-selected.svg" title="Delete selected elements">
+	</div>
+	<div class="btn-group mr-2" role="group">
+		<img id="sync-icon" class="toolbar-element" src="images/toolbar/synchronize.svg" title="Synchronize views">
+	</div>
+	<div class="btn-group" role="group" aria-label="Third group">
+		<img id="perform-layout-icon" class="toolbar-element" src="images/toolbar/layout.svg" title="Perform Layout">
+		<img id="layout-properties-icon" class="toolbar-element" src="images/toolbar/layout-properties.svg" title="Layout Properties">
+	</div>
+</div>
+<div id="info-content">
+	<table width="100%" height="100%" align="center" valign="center">
+		<tr>
+			<td>
+				<span class="input-file" id="file-name-left"></span>
+			</td>
+			<td>
+				<span class="input-file" style="float: right" id="file-name-right"</span>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="cyL"></div>
+<div id="cyR"></div>
+
+<nav id="multiple-files-toolbar" style="display: none;">
+	<div class="btn-toolbar justify-content-around fixed-bottom" style="left: 5%; right: 5%;" role="toolbar" aria-label="Toolbar with button groups">
+		<div>
+			<ul id="paginationLeft" class="pagination" style="margin: 0px;">
+			</ul>
+		</div>
+		<div>
+			<ul id="paginationControl" class="pagination" style="margin: 0px;">
+				<li id="previousGraph" class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>
+				<li id="nextGraph" class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>
+			</ul>
+		</div>
+		<div>
+			<ul id="paginationRight" class="pagination" style="margin: 0px;">
+			</ul>
+		</div>
+	</div>
+</nav>
+<script type="text/template" id="instance-properties-template">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Instance Properties</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<table class="table">
+					<tr>
+						<td>
+							<span class="add-on layout-text">Graph</span>
+						</td>
+						<td>
+							<select class="custom-select custom-select-sm" id="current-instance-name">
+							<%= currentInstances %>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="add-on layout-text">Background Color</span>
+						</td>
+						<td>
+							<input id="instance-background-color" type="color" value= <%= instanceBackgroundColor %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span class="add-on layout-text">Node Background Color</span>
+						</td>
+						<td>
+							<input id="node-background-color" type="color" value= <%= nodeBackgroundColor %> />
+						</td>
+					</tr>
+
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button id="save-style-changes" type="button" class="btn btn-primary">Save</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script type="text/template" id="add-node-template">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Instance Properties</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<table class="table">
+					<tr>
+						<td>
+							<span>Label</span>
+						</td>
+						<td>
+							<input class="modal-input" id="new-node-label" type="text" value= <%= label %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span>Width</span>
+						</td>
+						<td>
+							<input class="modal-input-sm" id="new-node-width" type="text" value= <%= width %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span>Height</span>
+						</td>
+						<td>
+							<input class="modal-input-sm" id="new-node-height" type="text" value= <%= height %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span class="add-on layout-text">Background Color</span>
+						</td>
+						<td>
+							<input id="new-node-color" type="color" value= <%= backgroundColor %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span class="add-on layout-text"> Shape </span>
+						</td>
+						<td>
+							<select class="custom-select custom-select-sm" id="new-node-shape">
+								<option value="rectangle">Rectangle</option>
+								<option value="triangle">Triangle</option>
+								<option value="ellipse">Ellipse</option>
+								<option value="roundrectangle">Round Rectangle</option>
+								<option value="pentagon">Pentagon</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button id="save-style-changes" type="button" class="btn btn-primary">Save</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script type="text/template" id="add-edge-template">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Edge Properties</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<table class="table">
+					<tr>
+						<td>
+							<span>Label</span>
+						</td>
+						<td>
+							<input class="modal-input" id="new-edge-label" type="text" value="<%= label %>"/>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span>Width</span>
+						</td>
+						<td>
+							<input class="modal-input-sm" id="new-edge-width" type="text" value= <%= width %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span class="add-on layout-text">Background Color</span>
+						</td>
+						<td>
+							<input id="new-edge-color" type="color" value= <%= backgroundColor %> />
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<span class="add-on layout-text"> Shape </span>
+						</td>
+						<td>
+							<select class="custom-select custom-select-sm" id="new-edge-shape">
+								<option value="rectangle">Rectangle</option>
+								<option value="triangle">Triangle</option>
+								<option value="ellipse">Ellipse</option>
+								<option value="roundrectangle">Round Rectangle</option>
+								<option value="pentagon">Pentagon</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				<button id="save-style-changes" type="button" class="btn btn-primary">Save</button>
+			</div>
+		</div>
+	</div>
+</script>
+<div class="modal fade" id="quick-help-template" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Quick Help</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p><span style="font-weight: bold">File:</span> Load single/multilpe files</p>
+				<p><span style="font-weight: bold">Edit:</span> Instance properties</p>
+				<p><span style="font-weight: bold">Layout:</span> Layout style and properties</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="select-multiple-file-modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="selectMultipleFile">Error</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Please select two or more files!
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	<div class="modal fade" id="cose-bilkent-layout-table" tabindex="-1" role="dialog">
+	</div>
+	<div class="modal fade" id="add-node-table" tabindex="-1" role="dialog">
+	</div>
+	<div class="modal fade" id="add-edge-table" tabindex="-1" role="dialog">
+	</div>
+	<div class="modal fade" id="instance-properties-table" tabindex="-1" role="dialog">
+	</div>
+
+<script type="text/template" id="cose-bilkent-settings-template">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Layout Properties</h5>
+				<button type="button" class="close" data-dismiss="modal"> 
+					<span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			<table class="table">
+			<tbody>
+			<tr>
+			<td>
+			<span title="Node repulsion (non overlapping) multiplier"> Node Repulsion </span>
+			</td>
+			<td>
+			<input id="node-repulsion" type="text" min="0" class="modal-input-sm integer-input" value=500  >
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span title="Ideal (intra-graph) edge length"> Ideal Edge Length </span>
+			</td>
+			<td>
+			<input id="ideal-edge-length" type="text" min="5" class="modal-input-sm integer-input" value= <%= idealEdgeLength %> >
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span  title="Divisor to compute edge forces"> Edge Elasticity </span>
+			</td>
+			<td>
+			<input id="edge-elasticity" type="number" min="0" class="modal-input-sm" value= <%= edgeElasticity %> >
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span title="Nesting factor (multiplier) to compute ideal edge length for inter-graph edges"> Nesting Factor </span>
+			</td>
+			<td>
+			<input id="nesting-factor" type="number" min="0" class="modal-input-sm" value= <%= nestingFactor %> >
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span title="Gravity force (constant)"> Gravity </span>
+			</td>
+			<td>
+			<input id="gravity" type="number" min="0" class="modal-input-sm" value= <%= gravity %> >
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span title="Maximum number of iterations to perform"> Number of Iterations </span>
+			</td>
+			<td>
+			<input id="num-iter" type="text" min="0" class="modal-input-sm integer-input" value= <%= numIter %> >
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span title="Whether to tile disconnected nodes"> Tile Disconnected </span>
+			</td>
+
+			<td>
+			<input id="tile" type="checkbox" <% if (tile){ %> checked<%}%>>
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			<span title="Whether to perform animation during layout"> Animate </span>
+			</td>
+
+			<td>
+			<input id="animate" type="checkbox" <% if (animate === 'during'){ %> checked<%}%>>
+			</td>
+			</tr>
+			<tr>
+			<td>
+			<span title="Whether to enable incremental mode"> Incremental </span>
+			</td>
+
+			<td>
+			<input id="incremental" type="checkbox" <% if (!false){ %> checked<%}%>>
+			</td>
+			</tr>
+
+			</tbody>
+			</table>
+			</div>
+			<div class="modal-footer">
+				<button id="default-layout" class="btn btn-default">Default</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</script>
+<script src="./bundle.js"></script>
+
+</body>
+</html>

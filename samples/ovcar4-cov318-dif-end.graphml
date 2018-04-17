@@ -1,0 +1,293 @@
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="x" for="node" attr.name="x" attr.type="int"/>
+  <key id="y" for="node" attr.name="y" attr.type="int"/>
+  <key id="height" for="node" attr.name="height" attr.type="int"/>
+  <key id="width" for="node" attr.name="width" attr.type="int"/>
+  <key id="shape" for="node" attr.name="shape" attr.type="string"/>
+  <key id="clusterID" for="node" attr.name="clusterID" attr.type="string"/>
+  <key id="margin" for="graph" attr.name="margin" attr.type="int"/>
+  <key id="style" for="edge" attr.name="style" attr.type="string"/>
+  <key id="arrow" for="edge" attr.name="arrow" attr.type="string"/>
+  <key id="bendpoint" for="edge" attr.name="bendpoint" attr.type="string"/>
+  <key id="color" for="all" attr.name="color" attr.type="string"/>
+  <key id="borderColor" for="all" attr.name="borderColor" attr.type="string"/>
+  <key id="text" for="all" attr.name="text" attr.type="string"/>
+  <key id="textFont" for="all" attr.name="textFont" attr.type="string"/>
+  <key id="textColor" for="all" attr.name="textColor" attr.type="string"/>
+  <key id="highlightColor" for="all" attr.name="highlightColor" attr.type="string"/>
+  <graph id="" edgedefault="undirected">
+    <node id="n0">
+      <data key="x">15</data>
+      <data key="y">31</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">251 90 77</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">SRC</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n1">
+      <data key="x">13</data>
+      <data key="y">104</data>
+      <data key="height">20</data>
+      <data key="width">41</data>
+      <data key="color">198 193 226</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">PRKCA</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n2">
+      <data key="x">157</data>
+      <data key="y">61</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">146 177 210</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">AKT3</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n3">
+      <data key="x">250</data>
+      <data key="y">72</data>
+      <data key="height">20</data>
+      <data key="width">44</data>
+      <data key="color">232 6 150</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">AKT1S1</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n4">
+      <data key="x">46</data>
+      <data key="y">384</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">239 179 136</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">NOC2L</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n5">
+      <data key="x">139</data>
+      <data key="y">359</data>
+      <data key="height">20</data>
+      <data key="width">48</data>
+      <data key="color">224 231 236</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">CDKN1A</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n6">
+      <data key="x">152</data>
+      <data key="y">286</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">233 226 234</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">TP53</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n7">
+      <data key="x">154</data>
+      <data key="y">213</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">86 197 164</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">PTEN</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n8">
+      <data key="x">297</data>
+      <data key="y">136</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">223 139 83</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">AKT2</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n9">
+      <data key="x">318</data>
+      <data key="y">266</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">139 235 250</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">TP73</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n10">
+      <data key="x">411</data>
+      <data key="y">251</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">111 212 238</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">RAD51</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n11">
+      <data key="x">299</data>
+      <data key="y">10</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">198 216 112</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">AKT1</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n12">
+      <data key="x">10</data>
+      <data key="y">178</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">178 235 148</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">BLK</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <node id="n13">
+      <data key="x">237</data>
+      <data key="y">395</data>
+      <data key="height">20</data>
+      <data key="width">40</data>
+      <data key="color">232 167 124</data>
+      <data key="borderColor">14 112 130</data>
+      <data key="text">FOXG1</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="clusterID">0</data>
+      <data key="shape">RoundRect</data>
+    </node>
+    <edge id="e0" source="n8" target="n3">
+      <data key="color">0 100 0</data>
+      <data key="text">o</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Solid</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e1" source="n12" target="n1">
+      <data key="color">0 100 0</data>
+      <data key="text">o</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Solid</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e2" source="n0" target="n1">
+      <data key="color">0 100 0</data>
+      <data key="text">o</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Solid</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e3" source="n9" target="n10">
+      <data key="color">0 80 20</data>
+      <data key="text"/>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Dashed</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e4" source="n2" target="n3">
+      <data key="color">0 100 0</data>
+      <data key="text">o</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Solid</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e5" source="n6" target="n5">
+      <data key="color">0 80 20</data>
+      <data key="text"/>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Dashed</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e6" source="n13" target="n5">
+      <data key="color">80 20 0</data>
+      <data key="text"/>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Dashed</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e7" source="n6" target="n7">
+      <data key="color">0 80 20</data>
+      <data key="text"/>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Dashed</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e8" source="n11" target="n3">
+      <data key="color">0 100 0</data>
+      <data key="text">o</data>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Solid</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <edge id="e9" source="n4" target="n5">
+      <data key="color">80 20 0</data>
+      <data key="text"/>
+      <data key="textFont">1|Arial|8.0|0|GTK|1|</data>
+      <data key="textColor">0 0 0</data>
+      <data key="style">Dashed</data>
+      <data key="arrow">Target</data>
+      <data key="width">1</data>
+    </edge>
+    <data key="margin">-1</data>
+  </graph>
+</graphml>
