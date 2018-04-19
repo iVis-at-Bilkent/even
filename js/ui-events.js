@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { saveAs } from 'file-saver';
 
-import {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties, applyLayout} from './layouts.js';
+import {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties, applyMergedLayout, applyUnnamedLayout} from './layouts.js';
 import {loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample} from './file-utilities.js';
 
 import {graphmlToJSON, textToXmlObject, loadXMLDoc} from './converter.graphml-to-json.js';
@@ -151,10 +151,10 @@ $("#layout-properties, #layout-properties-icon").click(function (e) {
 $("#perform-layout").click(function (e) {
 	switch (tempName) {
 		case 'cose-bilkent':
-			coseBilkentLayoutProp.applyLayout();
+			applyMergedLayout();
 			break;
 		case 'cose':
-			applyLayout();
+			applyUnnamedLayout();
 			break;
 	}
 });

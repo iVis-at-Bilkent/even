@@ -5,6 +5,7 @@ import edgehandles from 'cytoscape-edgehandles';
 import panzoom from 'cytoscape-panzoom';
 import contextMenus from 'cytoscape-context-menus';
 import coseBilkent from 'cytoscape-cose-bilkent';
+import synchedLayout from 'cytoscape-synched';
 
 import bindHover from './hover';
 import properties from './properties.js';
@@ -13,6 +14,7 @@ cytoscape.use(edgehandles);
 cytoscape.use(panzoom);
 cytoscape.use(contextMenus, $);
 cytoscape.use(coseBilkent);
+cytoscape.use(synchedLayout);
 
 var defaultInstanceProperties = properties.defaultInstanceProperties;
 var cyL; var cyR; var cy_headless;

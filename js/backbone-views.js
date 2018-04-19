@@ -232,41 +232,6 @@ views.COSEBilkentLayout = Backbone.View.extend({
 		copyProperties: function () {
 			this.currentLayoutProperties = _.clone(this.defaultLayoutProperties);
 		},
-		applyLayout: function () {
-			var options = {};
-			for (var prop in this.currentLayoutProperties) {
-				options[prop] = this.currentLayoutProperties[prop];
-			}
-			var eles1 = cyL.elements();
-			var eles2 = cyR.elements();
-			var all_eles = eles1.union(eles2);
-			cy_headless.elements().remove();
-			cy_headless.add(all_eles);
-			cy_headless.layout(options).run();
-			cy_headless.one("layoutstop", function(){
-				var pos = {};
-				cy_headless.nodes().forEach(function(ele, i) {
-					pos[ele.id()] = {x:ele.position("x"), y: ele.position("y")};
-				})
-				if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
-					toggleSync(false);
-				}
-				cyL.nodes().positions(function(ele, i){return {x:pos[ele.id()].x, y:pos[ele.id()].y}});
-				cyR.nodes().positions(function(ele, i){return {x:pos[ele.id()].x, y:pos[ele.id()].y}});
-				cyL.fit(50); cyR.fit(50);
-
-				if (cyL.zoom() > cyR.zoom()){
-					cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
-				}
-				else{
-					cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
-				}
-				if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
-					toggleSync(true);
-				}
-
-			});
-		},
 		render: function () {
 			var self = this;
 			var temp = _.template($("#cose-bilkent-settings-template").html());

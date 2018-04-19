@@ -5,8 +5,7 @@ import Backbone from 'backbone';
 
 import {cyL, cyR, cy_headless} from './cy-utilities';
 
-var graph = {};
-var edgeNodes = [];
+var api = cyL.synchedLayout('get');
 var defaultInstanceProperties = {
 	leftInstancebackgroundColor: "#ffebee",
 	rightInstancebackgroundColor: "#E3F2FD",
@@ -26,7 +25,6 @@ var setFileContent = function(fileName, id){
 	}
 	span.appendChild( document.createTextNode(fileName) );
 };
-
 
 var toggleSync = function(bool){
 	if (bool){
@@ -72,73 +70,52 @@ var toggleSync = function(bool){
 };
 
 
+var applyMergedLayout = function() {
+	if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+		toggleSync(false);
+	}
 
-var applyLayout = function() {
-	var eles1 = cyL.elements();
-	var eles2 = cyR.elements();
-	var all_eles = eles1.intersection(eles2);
+	let api = cyL.synchedLayout('get');
+	api.applyMergedLayout(cyL, cyR);
 
-	let common_id = {};
+	cyL.one("synchedLayoutStopped", function() {
+		cyL.fit(50); cyR.fit(50);
 
-	all_eles.forEach(function(ele, i) {
-		common_id[ele.id()] = true;
-	});
-
-	cy_headless.elements().remove();
-	cy_headless.add(all_eles);
-	cy_headless.layout({name: "cose-bilkent", excludedNodes: {}}).run();
-	cy_headless.one("layoutstop", function(){
-		var pos = {};
-		cy_headless.nodes().forEach(function(ele, i) {
-			pos[ele.id()] = {x:ele.position("x"), y: ele.position("y")};
-		})
-		if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
-			toggleSync(false);
+		if (cyL.zoom() > cyR.zoom()){
+			cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
 		}
-
-		cyL.nodes().positions(function(ele, i){
-			if (pos[ele.id()]) {
-				return {x:pos[ele.id()].x, y:pos[ele.id()].y};
-			} else {
-				return ele.position();
-			}
-		});
-		cyR.nodes().positions(function(ele, i){
-			if (pos[ele.id()]) {
-				return {x:pos[ele.id()].x, y:pos[ele.id()].y};
-			} else {
-				return ele.position();
-			}
-		});
-
-		cyL.layout({name: "cose-bilkent",  randomize: false, excludedNodes: pos}).run();
-		cyR.layout({name: "cose-bilkent",  randomize: false, excludedNodes: pos}).run();
-
-
-		cyL.one("layoutstop", function(){
-
-			if (cyL.zoom() > cyR.zoom()){
-				cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
-			}
-			else{
-				cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
-			}
-		})
-		cyR.one("layoutstop", function(){
-			cyL.fit(50); cyR.fit(50);
-
-			if (cyL.zoom() > cyR.zoom()){
-				cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
-			}
-			else{
-				cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
-			}
-		})
+		else{
+			cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
+		}
 
 		if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
 			toggleSync(true);
 		}
-
 	});
+
 };
-export {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties, applyLayout};
+
+var applyUnnamedLayout = function() {
+	if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+		toggleSync(false);
+	}
+
+	api.applyUnnamedLayout(cyL, cyR);
+
+	cyL.one("synchedLayoutStopped", function() {
+		cyL.fit(50); cyR.fit(50);
+
+		if (cyL.zoom() > cyR.zoom()){
+			cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
+		}
+		else{
+			cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
+		}
+
+		if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+			toggleSync(true);
+		}
+	});
+
+};
+export {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties, applyMergedLayout, applyUnnamedLayout};
