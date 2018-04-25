@@ -10,6 +10,7 @@ properties.defaultInstanceProperties = {
 	instanceBackgroundColor: "#B1C1F2",
 	nodeBackgroundColor: "#B1C1F2",
 	currentInstances: "",
+	preserveOriginalColors: false,
 };
 
 properties.currentInstanceProperties = {};

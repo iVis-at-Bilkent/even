@@ -58,7 +58,7 @@
 				Edit
 			</a>
 			<ul class="dropdown-menu" aria-labelledby="editDropdown">
-				<a class="dropdown-item" href="#" id="instance-properties">Instance Properties...</a>
+				<a class="dropdown-item" href="#" id="instance-properties">Properties...</a>
 				<a class="dropdown-item" id="delete-selected" href="#">Delete Selected<i class="shortcut"> (DEL)</i> </a>
 				<a class="dropdown-item" id="clear-instances" href="#">Clear</a>
 			</ul>
@@ -184,7 +184,7 @@
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Instance Properties</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Properties</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -192,6 +192,20 @@
 			<div class="modal-body">
 
 				<table class="table">
+					<tr>
+						<th colspan="2">General Properties</th>
+					</tr>
+					<tr>
+						<td>
+							<span class="add-on layout-text">Preserve Original Colors</span>
+						</td>
+						<td>
+							<input id="preserve-original-colors" type="checkbox" <% if (preserveOriginalColors){ %> checked <%}%>>
+						</td>
+					</tr>
+					<tr>
+						<th colspan="2">Instance Properties</th>
+					</tr>
 					<tr>
 						<td>
 							<span class="add-on layout-text">Graph</span>

@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { saveAs } from 'file-saver';
 
-import {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties, applyMergedLayout, applyUnnamedLayout} from './layouts.js';
+import {toggleSync, cyL, cyR, setFileContent, applyMergedLayout, applyUnnamedLayout} from './layouts.js';
 import {loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample} from './file-utilities.js';
 
 import {graphmlToJSON, textToXmlObject, loadXMLDoc} from './converter.graphml-to-json.js';
@@ -9,6 +9,7 @@ import views from './backbone-views.js';
 import properties from './properties.js';
 
 var currentInstanceProperties = properties.currentInstanceProperties;
+var defaultInstanceProperties = properties.defaultInstanceProperties;
 
 var instanceNames = [];
 

@@ -62,12 +62,20 @@ var elesJsonR = {
 };
 
 
-var getLeftColor = function() {
-	return defaultInstanceProperties.leftInstanceNodeBackgroundColor;
+var getLeftColor = function(ele) {
+	if (defaultInstanceProperties.preserveOriginalColors && ele.data('background-color')) {
+		return ele.data('background-color');
+	} else {
+		return defaultInstanceProperties.leftInstanceNodeBackgroundColor;
+	}
 }
 
-var getRightColor = function() {
-	return defaultInstanceProperties.rightInstanceNodeBackgroundColor;
+var getRightColor = function(ele) {
+	if (defaultInstanceProperties.preserveOriginalColors && ele.data('background-color')) {
+		return ele.data('background-color');
+	} else {
+		return defaultInstanceProperties.rightInstanceNodeBackgroundColor;
+	}
 }
 
 cyL = cytoscape({

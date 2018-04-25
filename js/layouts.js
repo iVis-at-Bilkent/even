@@ -6,17 +6,6 @@ import Backbone from 'backbone';
 import {cyL, cyR, cy_headless} from './cy-utilities';
 
 var api = cyL.synchedLayout('get');
-var defaultInstanceProperties = {
-	leftInstancebackgroundColor: "#ffebee",
-	rightInstancebackgroundColor: "#E3F2FD",
-	leftInstanceNodeBackgroundColor: "#e57373",
-	rightInstanceNodeBackgroundColor: "#64B5F6",
-	leftInstanceEdgeColor: "#F2B1BA",
-	rightInstanceEdgeColor: "#B1C1F2",
-	instanceBackgroundColor: "#B1C1F2",
-	nodeBackgroundColor: "#B1C1F2",
-	currentInstances: "",
-};
 
 var setFileContent = function(fileName, id){
 	var span = document.getElementById(id);
@@ -118,4 +107,4 @@ var applyUnnamedLayout = function() {
 	});
 
 };
-export {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties, applyMergedLayout, applyUnnamedLayout};
+export {toggleSync, cyL, cyR, setFileContent, applyMergedLayout, applyUnnamedLayout};

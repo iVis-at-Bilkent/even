@@ -1,6 +1,9 @@
 import {saveAs} from 'file-saver';
-import {toggleSync, cyL, cyR, setFileContent, defaultInstanceProperties} from './layouts.js';
+import {toggleSync, cyL, cyR, setFileContent} from './layouts.js';
 import {graphmlToJSON, textToXmlObject, loadXMLDoc} from './converter.graphml-to-json.js';
+import properties from './properties.js';
+
+var defaultInstanceProperties = properties.defaultInstanceProperties;
 
 var loadGraphIntoCytoscape = function(cytoscapeJsGraph, cy, otherCy, colorMap) {
 	var id_name_map = {};
@@ -22,33 +25,40 @@ var loadGraphIntoCytoscape = function(cytoscapeJsGraph, cy, otherCy, colorMap) {
 	}
 
 	cy.elements().remove();
-	otherCy.nodes().css("background-color", colorMap.otherNodeBackground);
-	otherCy.edges().css("line-color", colorMap.otherEdgeBackground);
-
-	for (let node of cytoscapeJsGraph.nodes){
-		let otherNode = otherCy.getElementById(node.data.id);
-		if (otherNode.length){
-			node.css["background-color"] = colorMap.commonNodeBackground;
-			otherNode.css("background-color", colorMap.commonNodeBackground);
-		}
-		else{
-			node.css["background-color"] = colorMap.nodeBackground;
-		};
-	}
-
-	for (let edge of cytoscapeJsGraph.edges){
-		let otherEdge = otherCy.getElementById(edge.data.id);
-		if (otherEdge.length){
-			edge.css = {"line-color" : colorMap.commonEdgeBackground};
-			otherEdge.css("line-color", colorMap.commonEdgeBackground);
-		}
-		else{
-			edge.css = {"line-color" : colorMap.edgeBackground};
-		};
-	}
-	
 	cy.add(cytoscapeJsGraph);
 	cy.fit(50);
+
+	updateColors(cy, otherCy, colorMap, defaultInstanceProperties.preserveOriginalColors);
+};
+
+var updateColors = function(cy, otherCy, colorMap, preserveOriginalColors) {
+	if (preserveOriginalColors) {
+		cy.nodes().css("background-color", '');
+		otherCy.nodes().css("background-color", '');
+		cy.style().update();
+		otherCy.style().update();
+	} else {
+		cy.nodes().css("background-color", colorMap.nodeBackground);
+		cy.edges().css("line-color", colorMap.edgeBackground);
+		otherCy.nodes().css("background-color", colorMap.otherNodeBackground);
+		otherCy.edges().css("line-color", colorMap.otherEdgeBackground);
+
+		cy.nodes().forEach(function(node) {
+			let otherNode = otherCy.getElementById(node.data('id'));
+			if (otherNode.length){
+				node.css("background-color", colorMap.commonNodeBackground);
+				otherNode.css("background-color", colorMap.commonNodeBackground);
+			}
+		});
+
+		cy.edges().forEach(function(edge) {
+			let otherEdge = otherCy.getElementById(edge.data('id'));
+			if (otherEdge.length){
+				edge.css("line-color", colorMap.commonEdgeBackground);
+				otherEdge.css("line-color", colorMap.commonEdgeBackground);
+			}
+		});
+	}
 };
 
 var saveAsGraphml = function (filename) {
@@ -92,4 +102,4 @@ var loadSample = function(fileName){
 	return fileObj;
 };
 
-export {loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample};
+export {loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample, updateColors};

@@ -2,6 +2,7 @@ import $ from "jquery";
 import Backbone from 'backbone';
 
 import {cyL, cyR, cy_headless} from './cy-utilities';
+import {updateColors} from './file-utilities';
 import  properties from './properties.js';
 
 var defaultInstanceProperties = properties.defaultInstanceProperties;
@@ -138,6 +139,15 @@ views.instancePropertiesView = Backbone.View.extend({
 		$(this.el).modal("show");
 	},
 	updateStyle: function() {
+		let preserveOriginalColors = document.getElementById('preserve-original-colors').checked;
+		if (preserveOriginalColors != defaultInstanceProperties.preserveOriginalColors) {
+			var colorMap = {nodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor,
+				edgeBackground : defaultInstanceProperties.leftInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.rightInstanceEdgeColor,
+				commonNodeBackground : "#BDBDBD", commonEdgeBackground : "#E0E0E0"};
+			defaultInstanceProperties.preserveOriginalColors = preserveOriginalColors;
+			updateColors(cyL, cyR, colorMap, preserveOriginalColors);
+		}
+
 		let instanceName = $("#current-instance-name").val();
 		let leftInstance = document.getElementById("cyL");
 		let rightInstance = document.getElementById("cyR");
@@ -145,6 +155,7 @@ views.instancePropertiesView = Backbone.View.extend({
 		currentInstanceProperties[instanceName] = {};
 		currentInstanceProperties[instanceName].instanceBackgroundColor = $("#instance-background-color").val();
 		currentInstanceProperties[instanceName].nodeBackgroundColor = $("#node-background-color").val();
+		currentInstanceProperties[instanceName].preserveOriginalColors = preserveOriginalColors;
 
 		if (instanceName == $("#file-name-left").html()) {
 			leftInstance.style.backgroundColor = $("#instance-background-color").val();
