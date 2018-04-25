@@ -11,8 +11,10 @@ import properties from './properties.js';
 var currentInstanceProperties = properties.currentInstanceProperties;
 var defaultInstanceProperties = properties.defaultInstanceProperties;
 
-var instanceNames = [];
+var instanceNames = ["graph1.xml", "graph2.xml"];
 
+setFileContent(instanceNames[0], "file-name-left");
+setFileContent(instanceNames[1], "file-name-right");
 ///////////////////// EDIT ////////////////////////////
 
 $("#delete-selected, #delete-selected-icon").click(function (e) {
@@ -34,8 +36,8 @@ $("#clear-instances").click(function() {
 	cyL.elements().remove();
 	cyR.elements().remove();
 	$("#multiple-files-toolbar").hide();
-	setFileContent("", "file-name-left");
-	setFileContent("", "file-name-right");
+	setFileContent(instanceNamesp[0], "file-name-left");
+	setFileContent(instanceNamesp[1], "file-name-left");
 });
 
 $("#pentagon-node, #rectangle-node").click(function() {
@@ -374,7 +376,7 @@ $("body").on("change", "#file-input-left", function (e, fileObject) {
 	};
 	reader.readAsText(file);
 	if (!fileObject) {
-		instanceNames[1] = file.name;
+		instanceNames[0] = file.name;
 	}
 	setFileContent(file.name, "file-name-left");
 	$("#file-input-left").val(null);
@@ -457,3 +459,5 @@ $("#sample1").click(function (e){
 	$("#file-input-right").trigger("change", [fileObj]);
 	instanceNames = ["ovcar4-ovcar3-dif-start.graphml", "ovcar4-ovcar3-dif-end.graphml"];
 });
+
+export {instanceNames};

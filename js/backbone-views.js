@@ -3,6 +3,7 @@ import Backbone from 'backbone';
 
 import {cyL, cyR, cy_headless} from './cy-utilities';
 import {updateColors} from './file-utilities';
+import {instanceNames} from './ui-events';
 import  properties from './properties.js';
 
 var defaultInstanceProperties = properties.defaultInstanceProperties;
@@ -119,7 +120,6 @@ var refreshCurrentInstanceList = function(instanceNames) {
 }
 var currentInstanceProperties = properties.currentInstanceProperties; 
 
-var instanceNames = ["graph1.xml", "graph2.xml"];
 views.instancePropertiesView = Backbone.View.extend({
 	initialize: function(){
 			var temp = _.template($("#instance-properties-template").html());
