@@ -20,12 +20,14 @@ var defaultInstanceProperties = properties.defaultInstanceProperties;
 var cyL; var cyR; var cy_headless;
 var elesJsonL = {
 	nodes: [
-		{data: {id: 'a'}},
-		{data: {id: 'b'}},
-		{data: {id: 'c'}},
-		{data: {id: 'd'}},
-		{data: {id: 'e'}},
-		{data: {id: 'f'}},
+		{data: {id: 'a', 'background-color': 'green'}},
+		{data: {id: 'b', 'background-color': 'green'}},
+		{data: {id: 'c', 'background-color': 'red'}},
+		{data: {id: 'd', 'background-color': 'blue'}},
+		{data: {id: 'e', 'background-color': 'red'}},
+		{data: {id: 'f', 'background-color': 'hotpink'}},
+		{data: {id: 'g', 'background-color': 'darkgreen'}},
+		{data: {id: 'h', 'background-color': 'hotpink'}},
 	],
 
 	edges: [
@@ -43,15 +45,19 @@ var elesJsonL = {
 
 var elesJsonR = {
 	nodes: [
-		{data: {id: 'a'}},
-		{data: {id: 'b'}},
-		{data: {id: 'c'}},
-		{data: {id: 'd'}},
-		{data: {id: 'e'}},
-		{data: {id: 'f'}},
+		{data: {id: 'a', 'background-color': 'red'}},
+		{data: {id: 'b', 'background-color': 'orange'}},
+		{data: {id: 'c', 'background-color': 'cyan'}},
+		{data: {id: 'd', 'background-color': 'red'}},
+		{data: {id: 'e', 'background-color': 'red'}},
+		{data: {id: 'f', 'background-color': 'red'}},
+		{data: {id: 'i', 'background-color': 'orangered'}},
+		{data: {id: 'k', 'background-color': 'lime'}},
 	],
 
 	edges: [
+		{data: {id: 'ac', source: 'a', target: 'c'}},
+		{data: {id: 'ak', source: 'a', target: 'k'}},
 		{data: {id: 'bc', source: 'b', target: 'c'}},
 		{data: {id: 'bf', source: 'b', target: 'f'}},
 		{data: {id: 'ce', source: 'c', target: 'e'}},
