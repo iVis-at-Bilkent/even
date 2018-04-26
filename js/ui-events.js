@@ -36,8 +36,8 @@ $("#clear-instances").click(function() {
 	cyL.elements().remove();
 	cyR.elements().remove();
 	$("#multiple-files-toolbar").hide();
-	setFileContent(instanceNamesp[0], "file-name-left");
-	setFileContent(instanceNamesp[1], "file-name-left");
+	setFileContent(instanceNames[0], "file-name-left");
+	setFileContent(instanceNames[1], "file-name-left");
 });
 
 $("#pentagon-node, #rectangle-node").click(function() {

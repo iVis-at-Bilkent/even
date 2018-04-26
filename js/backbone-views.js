@@ -122,11 +122,12 @@ var currentInstanceProperties = properties.currentInstanceProperties;
 
 views.instancePropertiesView = Backbone.View.extend({
 	initialize: function(){
-			var temp = _.template($("#instance-properties-template").html());
-			this.template = temp(defaultInstanceProperties);
-			var self = this;
-			self.copyProperties();
-			this.currentInstances = refreshCurrentInstanceList(instanceNames);
+		var temp = _.template($("#instance-properties-template").html());
+		this.template = temp(defaultInstanceProperties);
+		var self = this;
+		self.copyProperties();
+		this.currentInstances = refreshCurrentInstanceList(instanceNames);
+		this.currentInstance = $("#current-instance-name").val() || instanceNames[0];
 	},
 	events: {
 		"click button#save-style-changes": "updateStyle",
@@ -152,7 +153,6 @@ views.instancePropertiesView = Backbone.View.extend({
 		let leftInstance = document.getElementById("cyL");
 		let rightInstance = document.getElementById("cyR");
 
-		currentInstanceProperties[instanceName] = {};
 		currentInstanceProperties[instanceName].instanceBackgroundColor = $("#instance-background-color").val();
 		currentInstanceProperties[instanceName].nodeBackgroundColor = $("#node-background-color").val();
 		currentInstanceProperties[instanceName].preserveOriginalColors = preserveOriginalColors;
@@ -163,6 +163,7 @@ views.instancePropertiesView = Backbone.View.extend({
 			rightInstance.style.backgroundColor = $("#instance-background-color").val();
 		}
 
+		$("#current-instance-name").val(null);
 		$(this.el).modal('hide');
 	},
 
@@ -170,23 +171,27 @@ views.instancePropertiesView = Backbone.View.extend({
 		this.currentLayoutProperties = _.clone(this.defaultLayoutProperties);
 	},
 	render: function(){
-			var self = this;
-			var temp = _.template($("#instance-properties-template").html());
-			let instanceName = $("#current-instance-name").val();
+		var self = this;
+		var temp = _.template($("#instance-properties-template").html());
+		this.currentInstance = $("#current-instance-name").val() || instanceNames[0];
+		let instanceName = this.currentInstance;
 
-			if (currentInstanceProperties[instanceName]) {
-				currentInstanceProperties[instanceName].currentInstances= refreshCurrentInstanceList(instanceNames);
-				self.template = temp(currentInstanceProperties[instanceName]);
-			} else {
-				defaultInstanceProperties.currentInstances = refreshCurrentInstanceList(instanceNames);
-				self.template = temp(defaultInstanceProperties);
+		if (!currentInstanceProperties[instanceName]) {
+			currentInstanceProperties[instanceName] = _.clone(defaultInstanceProperties);
+			if (instanceName == $("#file-name-left").html()) {
+				currentInstanceProperties[instanceName].instanceBackgroundColor = defaultInstanceProperties.leftInstancebackgroundColor;
+				currentInstanceProperties[instanceName].nodeBackgroundColor = defaultInstanceProperties.leftInstanceNodeBackgroundColor;
+			} else if (instanceName == $("#file-name-right").html()) {
+				currentInstanceProperties[instanceName].instanceBackgroundColor = defaultInstanceProperties.rightInstancebackgroundColor
+				currentInstanceProperties[instanceName].nodeBackgroundColor = defaultInstanceProperties.rightInstanceNodeBackgroundColor;
 			}
+		}
+		currentInstanceProperties[instanceName].currentInstances = refreshCurrentInstanceList(instanceNames);
+		self.template = temp(currentInstanceProperties[instanceName]);
 
-			$(self.el).html(self.template);
-			if (instanceName) {
-				$("#current-instance-name").val(instanceName);
-			}
+		$(self.el).html(self.template);
 
+		$("#current-instance-name").val(instanceName)
 		return this;
 	},
 })
