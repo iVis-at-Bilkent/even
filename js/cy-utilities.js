@@ -10,6 +10,8 @@ import synchedLayout from 'cytoscape-synched';
 import bindHover from './hover';
 import properties from './properties.js';
 import views from './backbone-views.js';
+import {updateColors} from './file-utilities.js';
+
 cytoscape.use(edgehandles);
 cytoscape.use(panzoom);
 cytoscape.use(contextMenus, $);
@@ -161,6 +163,12 @@ cyR = cytoscape({
 		name: 'circle',
 		directed: false,
 		padding: 10
+	},
+	ready: function() {
+		var colorMap = {nodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor,
+			edgeBackground : defaultInstanceProperties.rightInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.leftInstanceEdgeColor,
+			commonNodeBackground : "#BDBDBD", commonEdgeBackground : "#E0E0E0"};
+		updateColors(this, cyL, colorMap);
 	},
 
 	wheelSensitivity: 0.1,
