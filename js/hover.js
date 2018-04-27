@@ -142,7 +142,7 @@ const bindHover = (cy, cyR) => {
     applyHoverStyle(cy, cyR, node.neighborhood().edges(), edgeHoverStyle);
   });
 
-  cy.on('mouseout', 'node[class!="compartment"]', function (evt) {
+  cy.on('mouseout cxttapend', 'node[class!="compartment"]', function (evt) {
     const node = evt.target;
     const neighborhood = node.neighborhood();
 
@@ -181,7 +181,7 @@ const bindHover = (cy, cyR) => {
     });
   });
 
-  cy.on('mouseout', 'edge', function (evt) {
+  cy.on('mouseout cxttapend', 'edge', function (evt) {
     const edge = evt.target;
 
     removeHoverStyle(cy, cyR, edge);
