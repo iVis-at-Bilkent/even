@@ -131,10 +131,7 @@ views.instancePropertiesView = Backbone.View.extend({
 	},
 	events: {
 		"click button#save-style-changes": "updateStyle",
-		"change #current-instance-name": "test",
-	},
-	test: function() {
-		this.render();
+		"change #current-instance-name": "refresh",
 	},
 	show: function(){
 		$(this.el).modal("show");
@@ -170,14 +167,15 @@ views.instancePropertiesView = Backbone.View.extend({
 	copyProperties: function () {
 		this.currentLayoutProperties = _.clone(this.defaultLayoutProperties);
 	},
-	render: function(){
-		var self = this;
-		var temp = _.template($("#instance-properties-template").html());
+
+	refresh: function() {
 		this.currentInstance = $("#current-instance-name").val() || instanceNames[0];
 		let instanceName = this.currentInstance;
 
 		if (!currentInstanceProperties[instanceName]) {
 			currentInstanceProperties[instanceName] = _.clone(defaultInstanceProperties);
+			currentInstanceProperties[instanceName].currentInstances = refreshCurrentInstanceList(instanceNames);
+
 			if (instanceName == $("#file-name-left").html()) {
 				currentInstanceProperties[instanceName].instanceBackgroundColor = defaultInstanceProperties.leftInstancebackgroundColor;
 				currentInstanceProperties[instanceName].nodeBackgroundColor = defaultInstanceProperties.leftInstanceNodeBackgroundColor;
@@ -186,12 +184,19 @@ views.instancePropertiesView = Backbone.View.extend({
 				currentInstanceProperties[instanceName].nodeBackgroundColor = defaultInstanceProperties.rightInstanceNodeBackgroundColor;
 			}
 		}
-		currentInstanceProperties[instanceName].currentInstances = refreshCurrentInstanceList(instanceNames);
-		self.template = temp(currentInstanceProperties[instanceName]);
+
+		$('#instance-background-color').val(currentInstanceProperties[instanceName].instanceBackgroundColor);
+		$('#node-background-color').val(currentInstanceProperties[instanceName].nodeBackgroundColor);
+	},
+
+	render: function(){
+		var self = this;
+		var temp = _.template($("#instance-properties-template").html());
+		this.refresh();
+		self.template = temp(currentInstanceProperties[this.currentInstance]);
 
 		$(self.el).html(self.template);
 
-		$("#current-instance-name").val(instanceName)
 		return this;
 	},
 })
