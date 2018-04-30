@@ -1,4 +1,7 @@
 import $ from "jquery";
+import  properties from './properties.js';
+
+var defaultInstanceProperties = properties.defaultInstanceProperties;
 
 const storeStyle = (ele, keys) => {
   const storedStyleProps = {};
@@ -8,6 +11,17 @@ const storeStyle = (ele, keys) => {
   }
 
   return storedStyleProps;
+};
+// taken from: https://stackoverflow.com/a/13542669
+function shadeColor(color, percent) {
+	var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+	return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+}
+
+let updateHoverStyleValues = function() {
+	let newColor = shadeColor(defaultInstanceProperties.hoverBackgroundColor, 0.5);
+	baseNodeHoverStyle['background-color'] = newColor;
+	baseEdgeHoverStyle['line-color'] = newColor;
 };
 
 const dynamicScalingfactors = (zoom) => {
@@ -91,8 +105,8 @@ const scaledDimensions = (node, zoom) => {
 };
 
 
+
 const baseNodeHoverStyle =  {
-  'background-color': '#CE93D8',
   'opacity': 1,
   'z-compound-depth': 'top',
   'color': 'white',
@@ -100,7 +114,6 @@ const baseNodeHoverStyle =  {
 };
 
 const baseEdgeHoverStyle = {
-  'line-color': '#E1BEE7',
   'opacity': 1
 };
 
@@ -130,7 +143,7 @@ const bindHover = (cy, cyR) => {
         'text-outline-width': outlineWidth,
         'width': w,
         'height': h,
-		'background-color': '#8E24AA'
+		'background-color': defaultInstanceProperties.hoverBackgroundColor,
       });
       applyHoverStyle(cy, cyR, node, nodeHoverStyle);
 
@@ -166,7 +179,7 @@ const bindHover = (cy, cyR) => {
 
     edge.source().union(edge.target()).forEach((node) => {
       const { w, h } = scaledDimensions(node, currZoom);
-      const nodeHoverStyle = $.extend(true, baseNodeHoverStyle, {
+      const nodeHoverStyle = $.extend(true, {}, baseNodeHoverStyle, {
         'width': w,
         'height': h,
         'font-size': fontSize,
@@ -174,7 +187,6 @@ const bindHover = (cy, cyR) => {
         'text-outline-color': 'black',
         'text-outline-width': outlineWidth,
         'opacity': 1,
-        'background-color': '#9575CD',
         'z-compound-depth': 'top'
       });
       applyHoverStyle(cy, cyR, node, nodeHoverStyle);
@@ -190,4 +202,6 @@ const bindHover = (cy, cyR) => {
   });
 };
 
-export default bindHover;
+updateHoverStyleValues();
+
+export {bindHover, updateHoverStyleValues, shadeColor};

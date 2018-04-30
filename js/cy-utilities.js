@@ -7,7 +7,7 @@ import contextMenus from 'cytoscape-context-menus';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import synchedLayout from 'cytoscape-synched';
 
-import bindHover from './hover';
+import {bindHover} from './hover';
 import properties from './properties.js';
 import views from './backbone-views.js';
 import {updateColors} from './file-utilities.js';

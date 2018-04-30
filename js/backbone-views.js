@@ -5,6 +5,7 @@ import {cyL, cyR, cy_headless} from './cy-utilities';
 import {updateColors} from './file-utilities';
 import {instanceNames} from './ui-events';
 import  properties from './properties.js';
+import {updateHoverStyleValues, shadeColor} from './hover';
 
 var defaultInstanceProperties = properties.defaultInstanceProperties;
 
@@ -138,13 +139,9 @@ views.instancePropertiesView = Backbone.View.extend({
 	},
 	updateStyle: function() {
 		let preserveOriginalColors = document.getElementById('preserve-original-colors').checked;
-		if (preserveOriginalColors != defaultInstanceProperties.preserveOriginalColors) {
-			var colorMap = {nodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor,
-				edgeBackground : defaultInstanceProperties.leftInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.rightInstanceEdgeColor,
-				commonNodeBackground : "#BDBDBD", commonEdgeBackground : "#E0E0E0"};
-			defaultInstanceProperties.preserveOriginalColors = preserveOriginalColors;
-			updateColors(cyL, cyR, colorMap, preserveOriginalColors);
-		}
+		let commonNodeBackground = $("#common-node-background-color").val();
+
+		defaultInstanceProperties.hoverBackgroundColor = $("#hover-background-color").val();
 
 		let instanceName = $("#current-instance-name").val();
 		let leftInstance = document.getElementById("cyL");
@@ -153,6 +150,8 @@ views.instancePropertiesView = Backbone.View.extend({
 		currentInstanceProperties[instanceName].instanceBackgroundColor = $("#instance-background-color").val();
 		currentInstanceProperties[instanceName].nodeBackgroundColor = $("#node-background-color").val();
 		currentInstanceProperties[instanceName].preserveOriginalColors = preserveOriginalColors;
+		currentInstanceProperties[instanceName].hoverBackgroundColor = defaultInstanceProperties.hoverBackgroundColor;
+		currentInstanceProperties[instanceName].commonNodeBackground = defaultInstanceProperties.commonNodeBackground;
 
 		if (instanceName == $("#file-name-left").html()) {
 			leftInstance.style.backgroundColor = $("#instance-background-color").val();
@@ -160,6 +159,22 @@ views.instancePropertiesView = Backbone.View.extend({
 			rightInstance.style.backgroundColor = $("#instance-background-color").val();
 		}
 
+		if (preserveOriginalColors != defaultInstanceProperties.preserveOriginalColors
+			|| commonNodeBackground != defaultInstanceProperties.commonNodeBackground) {
+			let commonEdgeBackground = defaultInstanceProperties.commonEdgeBackground = shadeColor(commonNodeBackground, 0.5);
+			let colorMap = {
+				nodeBackground: defaultInstanceProperties.leftInstanceNodeBackgroundColor,
+				otherNodeBackground: defaultInstanceProperties.rightInstanceNodeBackgroundColor,
+				edgeBackground: defaultInstanceProperties.leftInstanceEdgeColor,
+				otherEdgeBackground: defaultInstanceProperties.rightInstanceEdgeColor,
+				commonNodeBackground: commonNodeBackground, commonEdgeBackground : commonEdgeBackground,
+			};
+			defaultInstanceProperties.preserveOriginalColors = preserveOriginalColors;
+			defaultInstanceProperties.commonNodeBackground = commonNodeBackground;
+			updateColors(cyL, cyR, colorMap, preserveOriginalColors);
+		}
+
+		updateHoverStyleValues();
 		$("#current-instance-name").val(null);
 		$(this.el).modal('hide');
 	},
