@@ -167,7 +167,7 @@ cyR = cytoscape({
 	ready: function() {
 		var colorMap = {nodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor,
 			edgeBackground : defaultInstanceProperties.rightInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.leftInstanceEdgeColor,
-			commonNodeBackground : "#BDBDBD", commonEdgeBackground : "#E0E0E0"};
+			commonNodeBackground : defaultInstanceProperties.commonNodeBackgroundColor, commonEdgeBackground : defaultInstanceProperties.commonEdgeBackground};
 		updateColors(this, cyL, colorMap);
 	},
 

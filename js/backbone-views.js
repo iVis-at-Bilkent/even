@@ -151,7 +151,7 @@ views.instancePropertiesView = Backbone.View.extend({
 		currentInstanceProperties[instanceName].nodeBackgroundColor = $("#node-background-color").val();
 		currentInstanceProperties[instanceName].preserveOriginalColors = preserveOriginalColors;
 		currentInstanceProperties[instanceName].hoverBackgroundColor = defaultInstanceProperties.hoverBackgroundColor;
-		currentInstanceProperties[instanceName].commonNodeBackground = defaultInstanceProperties.commonNodeBackground;
+		currentInstanceProperties[instanceName].commonNodeBackgroundColor = commonNodeBackground;
 
 		if (instanceName == $("#file-name-left").html()) {
 			leftInstance.style.backgroundColor = $("#instance-background-color").val();
@@ -160,7 +160,7 @@ views.instancePropertiesView = Backbone.View.extend({
 		}
 
 		if (preserveOriginalColors != defaultInstanceProperties.preserveOriginalColors
-			|| commonNodeBackground != defaultInstanceProperties.commonNodeBackground) {
+			|| commonNodeBackground != defaultInstanceProperties.commonNodeBackgroundColor) {
 			let commonEdgeBackground = defaultInstanceProperties.commonEdgeBackground = shadeColor(commonNodeBackground, 0.5);
 			let colorMap = {
 				nodeBackground: defaultInstanceProperties.leftInstanceNodeBackgroundColor,
@@ -170,7 +170,7 @@ views.instancePropertiesView = Backbone.View.extend({
 				commonNodeBackground: commonNodeBackground, commonEdgeBackground : commonEdgeBackground,
 			};
 			defaultInstanceProperties.preserveOriginalColors = preserveOriginalColors;
-			defaultInstanceProperties.commonNodeBackground = commonNodeBackground;
+			defaultInstanceProperties.commonNodeBackgroundColor = commonNodeBackground;
 			updateColors(cyL, cyR, colorMap, preserveOriginalColors);
 		}
 

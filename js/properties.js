@@ -13,6 +13,7 @@ properties.defaultInstanceProperties = {
 	preserveOriginalColors: false,
 	hoverBackgroundColor: "#8E24AA",
 	commonNodeBackgroundColor: "#BDBDBD",
+	commonEdgeBackground: "#DEDEDE",
 };
 
 properties.currentInstanceProperties = {};

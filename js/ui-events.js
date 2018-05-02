@@ -360,7 +360,7 @@ $("body").on("change", "#file-input-left", function (e, fileObject) {
 
 		var colorMap = {nodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor,
 			edgeBackground : defaultInstanceProperties.leftInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.rightInstanceEdgeColor,
-			commonNodeBackground : "#BDBDBD", commonEdgeBackground : "#E0E0E0"};
+			commonNodeBackground : defaultInstanceProperties.commonNodeBackgroundColor, commonEdgeBackground : defaultInstanceProperties.commonEdgeBackground};
 
 		let leftInstanceName = file.name;
 		let rightInstanceName = $("#file-name-right").html();
@@ -399,7 +399,7 @@ $("body").on("change", "#file-input-right", function (e, fileObject) {
 
 		var colorMap = {nodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor,
 			edgeBackground : defaultInstanceProperties.rightInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.leftInstanceEdgeColor,
-			commonNodeBackground : "#BDBDBD", commonEdgeBackground : "#E0E0E0"};
+			commonNodeBackground : defaultInstanceProperties.commonNodeBackgroundColor, commonEdgeBackground : defaultInstanceProperties.commonEdgeBackground};
 
 		let leftInstanceName = $("#file-name-left").html();
 		let rightInstanceName = file.name;
