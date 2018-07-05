@@ -5,7 +5,6 @@ import Backbone from 'backbone';
 
 import {cyL, cyR, cy_headless} from './cy-utilities';
 
-var api = cyL.synchedLayout('get');
 
 var setFileContent = function(fileName, id){
 	var span = document.getElementById(id);
@@ -59,13 +58,13 @@ var toggleSync = function(bool){
 };
 
 
-var applyMergedLayout = function() {
+var applyAggregatedLayout = function() {
 	if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
 		toggleSync(false);
 	}
 
 	let api = cyL.synchedLayout('get');
-	api.applyMergedLayout(cyL, cyR);
+	api.applyAggregatedLayout(cyL, cyR);
 
 	cyL.one("synchedLayoutStopped", function() {
 		cyL.fit(50); cyR.fit(50);
@@ -84,12 +83,13 @@ var applyMergedLayout = function() {
 
 };
 
-var applyUnnamedLayout = function() {
+var applyInterLayedLayout = function(excludedNodeMoveFactor = 0.2) {
 	if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
 		toggleSync(false);
 	}
 
-	api.applyUnnamedLayout(cyL, cyR);
+	let api = cyL.synchedLayout('get');
+	api.applyInterLayedLayout(cyL, cyR, excludedNodeMoveFactor);
 
 	cyL.one("synchedLayoutStopped", function() {
 		cyL.fit(50); cyR.fit(50);
@@ -107,4 +107,30 @@ var applyUnnamedLayout = function() {
 	});
 
 };
-export {toggleSync, cyL, cyR, setFileContent, applyMergedLayout, applyUnnamedLayout};
+
+var applyExtendedInterLayedLayout = function(excludedNodeMoveFactor = 0.2) {
+	if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+		toggleSync(false);
+	}
+
+	let api = cyL.synchedLayout('get');
+	api.applyExtendedInterLayedLayout(cyL, cyR, excludedNodeMoveFactor);
+
+	cyL.one("synchedLayoutStopped", function() {
+		cyL.fit(50); cyR.fit(50);
+
+		if (cyL.zoom() > cyR.zoom()){
+			cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
+		}
+		else{
+			cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
+		}
+
+		if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+			toggleSync(true);
+		}
+	});
+
+};
+
+export {toggleSync, cyL, cyR, setFileContent, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout};

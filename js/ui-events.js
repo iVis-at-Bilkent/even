@@ -1,12 +1,26 @@
 import $ from "jquery";
 import { saveAs } from 'file-saver';
 
-import {toggleSync, cyL, cyR, setFileContent, applyMergedLayout, applyUnnamedLayout} from './layouts.js';
-import {loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample} from './file-utilities.js';
+import {toggleSync, cyL, cyR, setFileContent, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout} from './layouts.js';
+import {updateColors, loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample} from './file-utilities.js';
 
 import {graphmlToJSON, textToXmlObject, loadXMLDoc} from './converter.graphml-to-json.js';
 import views from './backbone-views.js';
 import properties from './properties.js';
+
+function loadTestGraph(result, cy) {
+	let arrayOfLines = result.match(/[^\r?\n]+/g);
+
+	for (let line of arrayOfLines) {
+		let wordList = line.split(' ');
+
+		if (wordList.length == 2) {
+			cy.add({group: "nodes", data: {label: 'n' + wordList[0], id: 'n' + wordList[0]}});
+		} else if (wordList.length == 4) {
+			cy.add({group: "edges", data: {source: 'n' + wordList[2], target: 'n' + wordList[3], id: 'e_' + 'n' + wordList[2] + 'n' + wordList[3]}})
+		}
+	}
+}
 
 var currentInstanceProperties = properties.currentInstanceProperties;
 var defaultInstanceProperties = properties.defaultInstanceProperties;
@@ -76,20 +90,28 @@ $("#save-file").click(function (e) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-$("#cose-bilkent").css("background-color", "grey");
+$("#aggregated-layout").css("background-color", "grey");
 
-var tempName = "cose-bilkent";
-$("#cose-bilkent").click( function (e) {
-	tempName = "cose-bilkent";
-	$("#cose-bilkent").css("background-color", "grey");
-	$("#cose").css("background-color", "white");
+var tempName = "aggregated-layout";
+$("#aggregated-layout").click( function (e) {
+	tempName = "aggregated-layout";
+	$("#aggregated-layout").css("background-color", "grey");
+	$("#interlayed-layout").css("background-color", "white");
+	$("#extended-interlayed-layout").css("background-color", "white");
 });
-$("#cose").click( function (e) {
-	tempName = "cose";
-	$("#cose").css("background-color", "grey");
-	$("#cose-bilkent").css("background-color", "white");
+$("#interlayed-layout").click( function (e) {
+	tempName = "interlayed-layout";
+	$("#interlayed-layout").css("background-color", "grey");
+	$("#aggregated-layout").css("background-color", "white");
+	$("#extended-interlayed-layout").css("background-color", "white");
 });
 
+$("#extended-interlayed-layout").click( function (e) {
+	tempName = "extended-interlayed-layout";
+	$("#extended-interlayed-layout").css("background-color", "grey");
+	$("#interlayed-layout").css("background-color", "white");
+	$("#aggregated-layout").css("background-color", "white");
+});
 
 $("#add-node-dropdown").click(function() {
 	cyL.autoungrabify(false);
@@ -153,11 +175,14 @@ $("#layout-properties, #layout-properties-icon").click(function (e) {
 
 $("#perform-layout").click(function (e) {
 	switch (tempName) {
-		case 'cose-bilkent':
-			applyMergedLayout();
+		case 'aggregated-layout':
+			applyAggregatedLayout();
 			break;
-		case 'cose':
-			applyUnnamedLayout();
+		case 'interlayed-layout':
+			applyInterLayedLayout();
+			break;
+		case 'extended-interlayed-layout':
+			applyExtendedInterLayedLayout();
 			break;
 	}
 });
@@ -350,6 +375,17 @@ $("body").on("change", "#file-input-left", function (e, fileObject) {
 
 	var reader = new FileReader();
 	reader.onload = function (e){
+		var colorMap = {nodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor,
+			edgeBackground : defaultInstanceProperties.leftInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.rightInstanceEdgeColor,
+			commonNodeBackground : defaultInstanceProperties.commonNodeBackgroundColor, commonEdgeBackground : defaultInstanceProperties.commonEdgeBackground};
+
+		if (!(this.result.indexOf("graphml") >= 0)) {
+			cyL.elements().remove();
+			loadTestGraph(this.result, cyL);
+			updateColors(cyL, cyR, colorMap, false);
+			return;
+		}
+
 		var graphmlConverter = new graphmlToJSON(textToXmlObject(this.result));
 		atts = graphmlConverter.attributes;
 
@@ -389,6 +425,17 @@ $("body").on("change", "#file-input-right", function (e, fileObject) {
 
 	var reader = new FileReader();
 	reader.onload = function (e){
+		var colorMap = {nodeBackground : defaultInstanceProperties.rightInstanceNodeBackgroundColor, otherNodeBackground : defaultInstanceProperties.leftInstanceNodeBackgroundColor,
+			edgeBackground : defaultInstanceProperties.rightInstanceEdgeColor, otherEdgeBackground: defaultInstanceProperties.leftInstanceEdgeColor,
+			commonNodeBackground : defaultInstanceProperties.commonNodeBackgroundColor, commonEdgeBackground : defaultInstanceProperties.commonEdgeBackground};
+
+		if (!(this.result.indexOf("graphml") >= 0)) {
+			cyR.elements().remove();
+			loadTestGraph(this.result, cyR);
+			updateColors(cyR, cyL, colorMap, false);
+			return;
+		}
+
 		var graphmlConverter = new graphmlToJSON(textToXmlObject(this.result));
 		atts = graphmlConverter.attributes;
 
@@ -443,6 +490,13 @@ $("#save-as-jpg").click(function(evt){
 	saveAsImage("jpg");
 });
 
+$("#quick-help-icon").click(function(evt){
+	$("#quick-help-template").modal('show');
+});
+
+$("#about-icon").click(function(evt){
+	$("#about-template").modal('show');
+});
 
 $("#sample0").click(function (e){
 	var fileObj = loadSample("ovcar4-cov318-dif-start.graphml");

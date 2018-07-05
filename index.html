@@ -80,8 +80,9 @@
 			<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 				<li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Style</a>
 				<ul class="dropdown-menu">
-					<a class="dropdown-item" href="#" id="cose-bilkent">Merged</a>
-					<a class="dropdown-item" href="#" id="cose">Unnamed Layout</a>
+					<a class="dropdown-item" href="#" id="aggregated-layout">Aggregated</a>
+					<a class="dropdown-item" href="#" id="interlayed-layout">InterLayed Layout</a>
+					<a class="dropdown-item" href="#" id="extended-interlayed-layout">Extended InterLayed Layout 2</a>
 				</ul>
 				</li>
 				<div class="dropdown-divider"></div>
@@ -89,10 +90,14 @@
 				<a class="dropdown-item" href="#" id="layout-properties">Layout Properties</a>
 			</ul>
 			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="#" data-toggle="modal" data-target="#quick-help-template">
+			<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Help
 			</a>
+			<ul class="dropdown-menu" aria-labelledby="editDropdown">
+				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#quick-help-template">Quick Help</a>
+				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#about-template">About</a>
+			</ul>
 			</li>
 		</ul>
 		<a href="#" target="_blank"><img src="images/even.svg" style="height: 36px;" title="Effective Visualization of Evolving Networks"></a>
@@ -141,9 +146,13 @@
 	<div class="btn-group mr-2" role="group">
 		<img id="sync-icon" class="toolbar-element" src="images/toolbar/synchronize.svg" title="Synchronize views">
 	</div>
-	<div class="btn-group" role="group" aria-label="Third group">
+	<div class="btn-group mr-2" role="group" aria-label="Third group">
 		<img id="perform-layout-icon" class="toolbar-element" src="images/toolbar/layout.svg" title="Perform Layout">
 		<img id="layout-properties-icon" class="toolbar-element" src="images/toolbar/layout-properties.svg" title="Layout Properties">
+	</div>
+	<div class="btn-group" role="group" aria-label="Third group">
+		<img id="quick-help-icon" class="toolbar-element" src="images/toolbar/quick-help.svg" title="Quick Help">
+		<img id="about-icon" class="toolbar-element" src="images/toolbar/about.svg" title="About">
 	</div>
 </div>
 <div id="info-content">
@@ -396,7 +405,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Quick Help</h5>
+				<h5 class="modal-title" id="quick-help">Quick Help</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -405,6 +414,33 @@
 				<p><span style="font-weight: bold">File:</span> Load single/multilpe files</p>
 				<p><span style="font-weight: bold">Edit:</span> Instance properties</p>
 				<p><span style="font-weight: bold">Layout:</span> Layout style and properties</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="about-template" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="about">About</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p><span style="font-weight: bold">Developed by:</span>
+					<a href="http://cs.bilkent.edu.tr/~ivis/" target="_blank">iVis@Bilkent</a>
+				</p>
+				<p><span style="font-weight: bold">Source Code:</span>
+					<a href="https://github.com/iVis-at-Bilkent/even" target="_blank">https://github.com/iVis-at-Bilkent/even</a>
+				</p>
+				<p><span style="font-weight: bold">Contact:</span>
+					<a href="mailto:ivis@cs.bilkent.edu.tr" target="_top">ivis@cs.bilkent.edu.tr</a>
+				</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
