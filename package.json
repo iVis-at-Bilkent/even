@@ -31,7 +31,7 @@
 	},
 	"devDependencies": {
 		"forever": "^0.15.3",
-		"webpack": "^4.10.0",
-		"webpack-cli": "^2.1.4"
+		"webpack": "^4.26.0",
+		"webpack-cli": "^3.1.2"
 	}
 }
