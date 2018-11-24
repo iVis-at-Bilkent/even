@@ -2,7 +2,8 @@
 
 ---
 
-even is a tool for Effective Visualization of Evolving Networks -- [demo](https://ivis-at-bilkent.github.io/even/)
+even (**E**ffective **V**isualization of **E**volving **N**etworks) is a tool to compare, edit, and synchronously lay out two or more networks
+-- [demo](https://ivis-at-bilkent.github.io/even/)
 
 ## Software
 ### Required Tools
