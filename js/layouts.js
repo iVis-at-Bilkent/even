@@ -133,4 +133,29 @@ var applyExtendedInterLayedLayout = function(excludedNodeMoveFactor = 0.2) {
 
 };
 
-export {toggleSync, cyL, cyR, setFileContent, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout};
+var applyConvergingIterationsLayout = function(excludedNodeMoveFactor = 0.2) {
+	if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+		toggleSync(false);
+	}
+
+	let api = cyL.synchedLayout('get');
+	api.applyIterativeLayout(cyL, cyR, 5);
+
+	cyL.one("synchedLayoutStopped", function() {
+		cyL.fit(50); cyR.fit(50);
+
+		if (cyL.zoom() > cyR.zoom()){
+			cyL.zoom(cyR.zoom()); cyL.pan(cyR.pan());
+		}
+		else{
+			cyR.zoom(cyL.zoom()); cyR.pan(cyL.pan());
+		}
+
+		if ($("#sync-icon").hasClass("toggle-mode-sustainable")) {
+			toggleSync(true);
+		}
+	});
+
+};
+
+export {toggleSync, cyL, cyR, setFileContent, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout, applyConvergingIterationsLayout};

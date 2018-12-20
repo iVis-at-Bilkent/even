@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { saveAs } from 'file-saver';
 
-import {toggleSync, cyL, cyR, setFileContent, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout} from './layouts.js';
+import {toggleSync, cyL, cyR, setFileContent, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout, applyConvergingIterationsLayout} from './layouts.js';
 import {updateColors, loadGraphIntoCytoscape, saveAsGraphml, saveAsImage, loadSample} from './file-utilities.js';
 
 import {graphmlToJSON, textToXmlObject, loadXMLDoc} from './converter.graphml-to-json.js';
@@ -98,12 +98,14 @@ $("#aggregated-layout").click( function (e) {
 	$("#aggregated-layout").css("background-color", "grey");
 	$("#interlayed-layout").css("background-color", "white");
 	$("#extended-interlayed-layout").css("background-color", "white");
+	$("#converging-iterations-layout").css("background-color", "white");
 });
 $("#interlayed-layout").click( function (e) {
 	tempName = "interlayed-layout";
 	$("#interlayed-layout").css("background-color", "grey");
 	$("#aggregated-layout").css("background-color", "white");
 	$("#extended-interlayed-layout").css("background-color", "white");
+	$("#converging-iterations-layout").css("background-color", "white");
 });
 
 $("#extended-interlayed-layout").click( function (e) {
@@ -111,6 +113,15 @@ $("#extended-interlayed-layout").click( function (e) {
 	$("#extended-interlayed-layout").css("background-color", "grey");
 	$("#interlayed-layout").css("background-color", "white");
 	$("#aggregated-layout").css("background-color", "white");
+	$("#converging-iterations-layout").css("background-color", "white");
+});
+
+$("#converging-iterations-layout").click( function (e) {
+	tempName = "converging-iterations-layout";
+	$("#converging-iterations-layout").css("background-color", "grey");
+	$("#interlayed-layout").css("background-color", "white");
+	$("#aggregated-layout").css("background-color", "white");
+	$("#extended-interlayed-layout").css("background-color", "white");
 });
 
 $("#add-node-dropdown").click(function() {
@@ -183,6 +194,9 @@ $("#perform-layout").click(function (e) {
 			break;
 		case 'extended-interlayed-layout':
 			applyExtendedInterLayedLayout();
+			break;
+		case 'converging-iterations-layout':
+			applyConvergingIterationsLayout();
 			break;
 	}
 });
